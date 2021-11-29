@@ -38,7 +38,7 @@ while True:
 
 
         if middle < 50:
-            keyboard.press_and_release('left')
+            keyboard.press_and_release('right')
         m.move(int(pos_x), int(pos_y))
         
 
