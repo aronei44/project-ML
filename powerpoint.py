@@ -3,6 +3,7 @@ import cv2
 import math
 from pymouse import PyMouse
 import numpy as np
+import keyboard
 
 monitor_height = 768
 monitor_width = 1366
@@ -22,18 +23,22 @@ while True:
 
     if len(handLandMarks) != 0:
         x4, y4 = handLandMarks[4][1],handLandMarks[4][2]
-        x5, y5 = handLandMarks[5][1],handLandMarks[5][2]
+        # x5, y5 = handLandMarks[5][1],handLandMarks[5][2]
         x8, y8 = handLandMarks[8][1],handLandMarks[8][2]
+        x12, y12 = handLandMarks[12][1],handLandMarks[12][2]
 
         pos_x = x8*monitor_width/frame.shape[1]
         pos_y = y8*monitor_height/frame.shape[0]
 
-        length = math.hypot(x4-x5,y4-y5)
-        # print(length)
-        if length >100:
-            m.click(int(pos_x), int(pos_y),1)
+        index = math.hypot(x4-x8,y4-y8)
+        middle = math.hypot(x4-x12,y4-y12)
+        # print(thumb)
+        if index <50:
+            keyboard.press_and_release('left')
 
 
+        if middle < 50:
+            keyboard.press_and_release('left')
         m.move(int(pos_x), int(pos_y))
         
 
