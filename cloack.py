@@ -20,24 +20,24 @@ while True:
     blur = cv2.GaussianBlur(hsv, (35,35), 0)
 
     # Red
-    lower = np.array([0,120,70])
-    upper = np.array([20,255,255])
-    mask01 = cv2.inRange(hsv, lower, upper)
+    # lower = np.array([0,120,70])
+    # upper = np.array([20,255,255])
+    # mask01 = cv2.inRange(hsv, lower, upper)
     
-    lower_red = np.array([170,120,70])
-    upper_red = np.array([190,255,255])
+    # lower_red = np.array([170,120,70])
+    # upper_red = np.array([190,255,255])
     
-    mask02 = cv2.inRange(hsv, lower_red, upper_red)
-    mask = mask01 + mask02
+    # mask02 = cv2.inRange(hsv, lower_red, upper_red)
+    # mask = mask01 + mask02
 
-    mask = cv2.morphologyEx(mask, cv2.MORPH_OPEN, np.ones((5,5),np.uint8))
+    # mask = cv2.morphologyEx(mask, cv2.MORPH_OPEN, np.ones((5,5),np.uint8))
 
 
     # Blue
-    # lower = np.array([90,100,20])
-    # upper = np.array([130,255,255])
-    # mask01 = cv2.inRange(hsv, lower, upper)
-    # mask = cv2.morphologyEx(mask01, cv2.MORPH_OPEN, np.ones((5,5),np.uint8))
+    lower = np.array([90,100,20])
+    upper = np.array([130,255,255])
+    mask01 = cv2.inRange(hsv, lower, upper)
+    mask = cv2.morphologyEx(mask01, cv2.MORPH_OPEN, np.ones((5,5),np.uint8))
     
 
 
