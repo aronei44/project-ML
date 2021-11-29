@@ -16,7 +16,12 @@ webcam.open(0,cv2.CAP_DSHOW)
 
 m = PyMouse()
 
+timer =  10
+
 while True:
+    if timer > 0:
+        timer -= 1
+        print(timer)
     status, frame = webcam.read()
     frame = cv2.flip(frame,1)
     handLandMarks = handDetection.findHandLandMarks(image=frame, draw=True)
@@ -30,20 +35,23 @@ while True:
         pos_x = x8*monitor_width/frame.shape[1]
         pos_y = y8*monitor_height/frame.shape[0]
 
-        index = math.hypot(x4-x5,y4-y5)
-        middle = math.hypot(x5-x8,y5-y8)
+        thumb = math.hypot(x4-x5,y4-y5)
+        index = math.hypot(x5-x8,y5-y8)
         # print(thumb)
-        if index >50:
-            keyboard.press_and_release('left')
+        if timer <=0:
+            if thumb >50:
+                keyboard.press_and_release('left')
+                timer = 10
 
+            if index >50:
+                keyboard.press_and_release('right')
+                timer = 10
 
-        if middle >50:
-            keyboard.press_and_release('right')
-        m.move(int(pos_x), int(pos_y))
+        # m.move(int(pos_x), int(pos_y))
         
 
 
-    cv2.imshow("Hand Landmark", frame)
+    # cv2.imshow("Hand Landmark", frame)
     if cv2.waitKey(1) == ord('q'):
         break
 
