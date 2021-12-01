@@ -52,7 +52,7 @@ while True:
         
 
 
-    # cv2.imshow("Hand Landmark", frame)
+    cv2.imshow("Hand Landmark", frame)
     if cv2.waitKey(1) == ord('q'):
         break
 
