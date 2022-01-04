@@ -17,12 +17,33 @@ class HandDetection:
         landMarkList = []
 
         if results.multi_hand_landmarks:
-            hand = results.multi_hand_landmarks[handNumber]
-            for id,landMark in enumerate(hand.landmark):
-                imgH, imgW, imgC = originalImage.shape
-                xPos, yPos = int(landMark.x*imgW),int(landMark.y*imgH)
-                landMarkList.append([id,xPos,yPos])
-            if draw:
-                mpDraw.draw_landmarks(originalImage,hand, mpHands.HAND_CONNECTIONS)
+            for hand in results.multi_hand_landmarks:
+                for id,landMark in enumerate(hand.landmark):
+                    imgH, imgW, imgC = originalImage.shape
+                    xPos, yPos = int(landMark.x*imgW),int(landMark.y*imgH)
+                    landMarkList.append([id,xPos,yPos])
+                if draw:
+                    mpDraw.draw_landmarks(originalImage,hand, mpHands.HAND_CONNECTIONS)
 
         return landMarkList
+
+
+if __name__=='__main__':
+    handDetection = HandDetection(min_detection_confidence=0.5,min_tracking_confidence=0.5)
+
+
+    webcam = cv2.VideoCapture()
+    webcam.open(0,cv2.CAP_DSHOW)
+
+    while True:
+        status, frame = webcam.read()
+        frame = cv2.flip(frame,1)
+        handLandMarks = handDetection.findHandLandMarks(image=frame, draw=True)
+        print(handLandMarks)
+
+        cv2.imshow("Hand Landmark", frame)
+        if cv2.waitKey(1) == ord('q'):
+            break
+
+    cv2.destroyAllWindows()
+    webcam.release()
